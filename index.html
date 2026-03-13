@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>TITO SMM PANEL</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0b0f19;
+color:white;
+margin:0;
+}
+
+.topbar{
+background:#111827;
+padding:15px;
+text-align:center;
+font-size:20px;
+font-weight:bold;
+}
+
+.balance{
+background:#1f2937;
+padding:10px;
+text-align:center;
+color:#22c55e;
+}
+
+.container{
+max-width:500px;
+margin:auto;
+padding:15px;
+}
+
+select,input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:6px;
+border:none;
+background:#1f2937;
+color:white;
+}
+
+button{
+width:100%;
+margin-top:15px;
+padding:12px;
+background:#25D366;
+border:none;
+border-radius:6px;
+font-weight:bold;
+color:white;
+}
+
+.servicebox{
+background:#111827;
+padding:12px;
+border-radius:8px;
+margin-top:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+TITO SMM PANEL
+</div>
+
+<div class="balance">
+Balance: ₹12,450
+</div>
+
+<div class="container">
+
+<div class="servicebox">
+Service
+<select id="service">
+
+<option value="Instagram Followers 1000">Instagram Followers 1000 - ₹199</option>
+
+<option value="Instagram Likes 1000">Instagram Likes 1000 - ₹99</option>
+
+<option value="Instagram Views 10000">Instagram Views 10000 - ₹79</option>
+
+<option value="YouTube Subscribers 1000">YouTube Subscribers 1000 - ₹399</option>
+
+<option value="YouTube Watch Hours 4000">YouTube Watch Hours 4000 - ₹4999</option>
+
+<option value="Telegram Members 10000">Telegram Members 10000 - ₹1899</option>
+
+</select>
+
+<input id="link" placeholder="Enter Link">
+
+<input id="qty" placeholder="Quantity">
+
+<button onclick="order()">Submit Order</button>
+
+</div>
+
+</div>
+
+<script>
+
+function order(){
+
+var service=document.getElementById("service").value
+
+var link=document.getElementById("link").value
+
+var qty=document.getElementById("qty").value
+
+var phone="917207207597"
+
+var text="New Order%0A%0AService: "+service+"%0ALink: "+link+"%0AQuantity: "+qty
+
+var url="https://wa.me/"+phone+"?text="+text
+
+window.open(url)
+
+}
+
+</script>
+
+</body>
+</html>
