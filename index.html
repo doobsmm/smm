@@ -1,37 +1,18 @@
 <!DOCTYPE html><html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<head><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>doob panel</title><style>
-
-:root{
---bg:#060b18;
---sidebar:#0f172a;
---card:#1f2937;
---text:#ffffff;
---muted:#9ca3af;
---accent:#22c55e;
-}
-
-.light{
---bg:#f4f6fb;
---sidebar:#e8edf6;
---card:#ffffff;
---text:#111827;
---muted:#6b7280;
---accent:#16a34a;
-}
 
 body{
 margin:0;
 font-family:Arial;
-background:var(--bg);
-color:var(--text);
+background:#070d1c;
+color:white;
 display:flex;
 }
 
 .sidebar{
-width:220px;
-background:var(--sidebar);
+width:230px;
+background:#0f172a;
 height:100vh;
 padding:20px;
 box-sizing:border-box;
@@ -47,16 +28,15 @@ margin-bottom:20px;
 width:100%;
 background:none;
 border:none;
-color:var(--text);
+color:white;
+padding:12px;
 text-align:left;
-padding:12px 10px;
-margin-bottom:6px;
-cursor:pointer;
 border-radius:6px;
+cursor:pointer;
 }
 
 .menu button:hover{
-background:var(--card);
+background:#1f2937;
 }
 
 .main{
@@ -67,56 +47,42 @@ padding:20px;
 .topbar{
 display:flex;
 justify-content:space-between;
-align-items:center;
 margin-bottom:20px;
 }
 
-.toggle{
-background:var(--card);
-padding:6px 10px;
-border-radius:6px;
-cursor:pointer;
-}
-
 .card{
-background:var(--card);
+background:#1f2937;
 padding:16px;
 border-radius:10px;
 margin-bottom:16px;
 }
 
-.stats{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-gap:10px;
+.section{
+display:none;
 }
 
-.stat{
-background:var(--card);
-padding:14px;
-border-radius:8px;
-text-align:center;
+.section.active{
+display:block;
 }
 
 select,input{
 width:100%;
 padding:12px;
-margin-top:6px;
-margin-bottom:12px;
+margin-bottom:10px;
 border:none;
 border-radius:8px;
-background:var(--card);
-color:var(--text);
+background:#111827;
+color:white;
 }
 
 button.primary{
-background:var(--accent);
+background:#22c55e;
 border:none;
 padding:12px;
 border-radius:8px;
+width:100%;
 color:white;
 font-weight:bold;
-width:100%;
 cursor:pointer;
 }
 
@@ -130,111 +96,98 @@ padding:10px;
 border-bottom:1px solid rgba(255,255,255,0.05);
 }
 
-.section{
+.stat-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:10px;
+}
+
+.stat{
+background:#1f2937;
+padding:14px;
+border-radius:8px;
+text-align:center;
+}
+
+.modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
 display:none;
+justify-content:center;
+align-items:center;
 }
 
-.section.active{
-display:block;
-}
-
-.total{
-font-size:18px;
-font-weight:bold;
-margin-top:10px;
+.modal-box{
+background:#1f2937;
+padding:20px;
+border-radius:10px;
+width:300px;
 }
 
 </style></head><body><div class="sidebar"><div class="logo">doob</div><div class="menu"><button onclick="showSection('dashboard')">Dashboard</button>
 <button onclick="showSection('order')">New Order</button>
 <button onclick="showSection('services')">Services</button>
 <button onclick="showSection('orders')">Orders</button>
-<button onclick="showSection('support')">Support</button>
+<button onclick="showSection('admin')">Admin</button>
 
-</div></div><div class="main"><div class="topbar"><h2 id="title">Dashboard</h2><div class="toggle" onclick="toggleTheme()">🌙/☀️</div></div><div id="dashboard" class="section active"><div class="stats"><div class="stat">
-<h3 id="stat1">0</h3>
+</div></div><div class="main"><div class="topbar"><h2 id="title">Dashboard</h2><div>Balance: ₹<span id="balance">5000</span></div></div><div id="dashboard" class="section active"><div class="stat-grid"><div class="stat">
+<h3 id="s1">0</h3>
 Services
 </div><div class="stat">
-<h3 id="stat2">0</h3>
+<h3 id="s2">0</h3>
 Orders
 </div><div class="stat">
-<h3 id="stat3">0</h3>
+<h3 id="s3">0</h3>
 Users
 </div><div class="stat">
-<h3 id="stat4">0</h3>
+<h3 id="s4">0</h3>
 Online
-</div></div></div><div id="order" class="section"><div class="card"><input id="search" placeholder="Search service..." onkeyup="searchService()"><label>Service</label>
-<select id="service" onchange="serviceChanged()"></select>
+</div></div></div><div id="order" class="section"><div class="card"><input id="search" placeholder="Search service..." onkeyup="searchService()"><select id="service" onchange="serviceChanged()"></select>
 
-<div class="card">Service ID: <span id="sid">-</span><br>
-Min: <span id="min">-</span><br>
-Max: <span id="max">-</span><br>
-Rate/1000: ₹<span id="rate">-</span>
+<div class="card">Service ID: <span id="sid"></span><br>
+Min: <span id="min"></span><br>
+Max: <span id="max"></span><br>
+Rate/1000: ₹<span id="rate"></span>
 
-<div class="total">
+<div>
 Total: ₹<span id="total">0</span>
-</div></div><label>Link</label>
-<input id="link">
+</div></div><input id="link" placeholder="Paste link"><input id="qty" placeholder="Quantity" oninput="calculate()"><button class="primary" onclick="confirmOrder()">Submit Order</button>
 
-<label>Quantity</label>
-<input id="qty" oninput="calculate()">
+</div></div><div id="services" class="section"><div class="card"><table class="table" id="serviceTable"></table></div></div><div id="orders" class="section"><div class="card"><table class="table" id="orderTable"></table></div></div><div id="admin" class="section"><div class="card"><h3>Add Service</h3><input id="aname" placeholder="Service name">
+<input id="aid" placeholder="Service ID">
+<input id="arate" placeholder="Rate">
+<input id="amin" placeholder="Min">
+<input id="amax" placeholder="Max"><button class="primary" onclick="addService()">Add Service</button>
 
-<button class="primary" onclick="sendOrder()">Submit Order</button>
+</div></div></div><div id="modal" class="modal"><div class="modal-box"><h3>Confirm Order</h3><div id="summary"></div><button class="primary" onclick="sendOrder()">Send Order</button>
 
-</div></div><div id="services" class="section"><div class="card"><table class="table"><tr><td>#101</td><td>Instagram Followers</td></tr>
-<tr><td>#102</td><td>Instagram Comments</td></tr>
-<tr><td>#103</td><td>Instagram Likes</td></tr>
-<tr><td>#201</td><td>YouTube Subscribers</td></tr>
-<tr><td>#202</td><td>YouTube Watch Hours</td></tr>
-<tr><td>#301</td><td>Telegram Members</td></tr>
-<tr><td>#401</td><td>TikTok Followers</td></tr>
-<tr><td>#501</td><td>Facebook Page Likes</td></tr></table></div></div><div id="orders" class="section"><div class="card"><table class="table"><tr><td>#5412</td><td>Instagram Followers</td><td>Completed</td></tr>
-<tr><td>#5413</td><td>YouTube Subscribers</td><td>Processing</td></tr>
-<tr><td>#5414</td><td>Telegram Members</td><td>Completed</td></tr></table></div></div><div id="support" class="section"><div class="card">Support available via WhatsApp.
-
-</div></div></div><script>
+</div></div><script>
 
 var services={
 
-"Instagram Followers":{
-id:101,
-rate:199,
-min:100,
-max:100000
-},
+"Instagram Followers":{id:101,rate:199,min:100,max:100000},
 
-"Instagram Comments":{
-id:102,
-rate:299,
-min:10,
-max:5000
-},
+"Instagram Likes":{id:102,rate:99,min:50,max:50000},
 
-"YouTube Subscribers":{
-id:201,
-rate:399,
-min:100,
-max:50000
-},
+"YouTube Subscribers":{id:201,rate:399,min:100,max:50000},
 
-"YouTube Watch Hours":{
-id:202,
-rate:4999,
-min:4000,
-max:4000
-},
+"YouTube Watch Hours":{id:202,rate:4999,min:4000,max:4000},
 
-"Telegram Members":{
-id:301,
-rate:1899,
-min:1000,
-max:100000
-}
+"Telegram Members":{id:301,rate:1899,min:1000,max:100000}
 
 }
+
+var orders=JSON.parse(localStorage.getItem("orders")||"[]")
 
 function loadServices(){
 
 var s=document.getElementById("service")
+
+s.innerHTML=""
 
 for(var key in services){
 
@@ -242,19 +195,37 @@ s.innerHTML+=`<option>`+key+`</option>`
 
 }
 
+renderServiceTable()
+
 serviceChanged()
+
+}
+
+function renderServiceTable(){
+
+var table=document.getElementById("serviceTable")
+
+table.innerHTML=""
+
+for(var key in services){
+
+let d=services[key]
+
+table.innerHTML+=`<tr><td>#`+d.id+`</td><td>`+key+`</td></tr>`
+
+}
 
 }
 
 function serviceChanged(){
 
-var name=document.getElementById("service").value
-var data=services[name]
+var name=service.value
+var d=services[name]
 
-document.getElementById("sid").innerText=data.id
-document.getElementById("min").innerText=data.min
-document.getElementById("max").innerText=data.max
-document.getElementById("rate").innerText=data.rate
+sid.innerText=d.id
+min.innerText=d.min
+max.innerText=d.max
+rate.innerText=d.rate
 
 calculate()
 
@@ -262,43 +233,77 @@ calculate()
 
 function calculate(){
 
-var qty=document.getElementById("qty").value
-var name=document.getElementById("service").value
-var data=services[name]
+var qty=qty.value
+var d=services[service.value]
 
 if(!qty)return
 
-var total=(qty/1000)*data.rate
+total.innerText=Math.round((qty/1000)*d.rate)
 
-document.getElementById("total").innerText=Math.round(total)
+}
+
+function confirmOrder(){
+
+var serviceName=service.value
+var quantity=qty.value
+var linkVal=link.value
+var totalVal=total.innerText
+
+summary.innerHTML=
+"Service: "+serviceName+"<br>"+
+"Qty: "+quantity+"<br>"+
+"Total: ₹"+totalVal
+
+modal.style.display="flex"
 
 }
 
 function sendOrder(){
 
-var service=document.getElementById("service").value
-var link=document.getElementById("link").value
-var qty=document.getElementById("qty").value
-var total=document.getElementById("total").innerText
+var serviceName=service.value
+var quantity=qty.value
+var linkVal=link.value
+var totalVal=total.innerText
+
+orders.push({service:serviceName,qty:quantity})
+
+localStorage.setItem("orders",JSON.stringify(orders))
+
+renderOrders()
 
 var phone="91XXXXXXXXXX"
 
-var msg="New Order%0AService: "+service+"%0ALink: "+link+"%0AQuantity: "+qty+"%0ATotal: ₹"+total
+var msg="New Order%0AService:"+serviceName+"%0ALink:"+linkVal+"%0AQty:"+quantity+"%0ATotal:₹"+totalVal
 
 window.open("https://wa.me/"+phone+"?text="+msg)
+
+modal.style.display="none"
+
+}
+
+function renderOrders(){
+
+var table=document.getElementById("orderTable")
+
+table.innerHTML=""
+
+orders.forEach((o,i)=>{
+
+table.innerHTML+=`<tr><td>#`+(5000+i)+`</td><td>`+o.service+`</td><td>Completed</td></tr>`
+
+})
 
 }
 
 function searchService(){
 
-var input=document.getElementById("search").value.toLowerCase()
-var options=document.getElementById("service").options
+var input=search.value.toLowerCase()
 
-for(var i=0;i<options.length;i++){
+for(var i=0;i<service.options.length;i++){
 
-var txt=options[i].text.toLowerCase()
+var txt=service.options[i].text.toLowerCase()
 
-options[i].style.display=txt.includes(input)?"":"none"
+service.options[i].style.display=txt.includes(input)?"":"none"
 
 }
 
@@ -310,37 +315,51 @@ document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"))
 
 document.getElementById(id).classList.add("active")
 
-document.getElementById("title").innerText=id.charAt(0).toUpperCase()+id.slice(1)
+title.innerText=id.charAt(0).toUpperCase()+id.slice(1)
 
-}
-
-function toggleTheme(){
-document.body.classList.toggle("light")
 }
 
 function animateStats(){
 
-let s1=0,s2=0,s3=0,s4=0
+let a=0,b=0,c=0,d=0
 
 let i=setInterval(()=>{
 
-if(s1<128)s1++
-if(s2<542)s2++
-if(s3<94)s3++
-if(s4<12)s4++
+if(a<120)a++
+if(b<orders.length)b++
+if(c<90)c++
+if(d<12)d++
 
-stat1.innerText=s1
-stat2.innerText=s2
-stat3.innerText=s3
-stat4.innerText=s4
+s1.innerText=a
+s2.innerText=b
+s3.innerText=c
+s4.innerText=d
 
-if(s1>=128)clearInterval(i)
+if(a>=120)clearInterval(i)
 
 },20)
 
 }
 
+function addService(){
+
+var name=aname.value
+
+services[name]={
+
+id:aid.value,
+rate:arate.value,
+min:amin.value,
+max:amax.value
+
+}
+
 loadServices()
+
+}
+
+loadServices()
+renderOrders()
 animateStats()
 
 </script></body>
