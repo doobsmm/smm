@@ -1,6 +1,5 @@
 <!DOCTYPE html><html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<head><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TITO SMM PANEL</title><style>
 
 body{
@@ -22,14 +21,26 @@ font-weight:bold;
 display:flex;
 justify-content:center;
 flex-wrap:wrap;
-gap:18px;
-padding:18px;
+gap:12px;
+padding:16px;
 background:#081326;
 }
 
-.platform img{
-width:38px;
+.platform{
+width:46px;
+height:46px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#0f172a;
+border-radius:10px;
 cursor:pointer;
+}
+
+.platform img{
+width:24px;
+height:24px;
+object-fit:contain;
 }
 
 .container{
@@ -78,7 +89,21 @@ color:white;
 
 </style></head><body><div class="header">
 TITO SMM PANEL
-</div><div class="platforms"><img onclick="setPlatform('instagram')" src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"><img onclick="setPlatform('youtube')" src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"><img onclick="setPlatform('telegram')" src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"><img onclick="setPlatform('tiktok')" src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png"><img onclick="setPlatform('facebook')" src="https://cdn-icons-png.flaticon.com/512/733/733547.png"><img onclick="setPlatform('twitter')" src="https://cdn-icons-png.flaticon.com/512/5968/5968958.png"><img onclick="setPlatform('spotify')" src="https://cdn-icons-png.flaticon.com/512/174/174872.png"></div><div class="container"><label>Category</label>
+</div><div class="platforms"><div class="platform" onclick="setPlatform('instagram')">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+</div><div class="platform" onclick="setPlatform('youtube')">
+<img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+</div><div class="platform" onclick="setPlatform('telegram')">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
+</div><div class="platform" onclick="setPlatform('tiktok')">
+<img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png">
+</div><div class="platform" onclick="setPlatform('facebook')">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
+</div><div class="platform" onclick="setPlatform('twitter')">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968958.png">
+</div><div class="platform" onclick="setPlatform('spotify')">
+<img src="https://cdn-icons-png.flaticon.com/512/174/174872.png">
+</div></div><div class="container"><label>Category</label>
 
 <select id="category" onchange="loadServices()"></select>
 
@@ -89,7 +114,7 @@ TITO SMM PANEL
 <label>Service Description</label>
 
 <div id="desc" class="description">
-Select a service to see details.
+Select a service to view description.
 </div><label>Link</label>
 <input id="link" placeholder="Paste link">
 
@@ -109,49 +134,51 @@ updateCategories()
 
 function updateCategories(){
 
-var c=document.getElementById("category")
+var category=document.getElementById("category")
 
-c.innerHTML=""
+category.innerHTML=""
 
 if(platform=="instagram"){
-c.innerHTML+=`<option value="followers">Followers</option>`
-c.innerHTML+=`<option value="likes">Likes</option>`
-c.innerHTML+=`<option value="views">Views</option>`
-c.innerHTML+=`<option value="comments">Comments</option>`
-c.innerHTML+=`<option value="reels">Reel Packages</option>`
-c.innerHTML+=`<option value="fpackages">Follower Packages</option>`
-c.innerHTML+=`<option value="engagement">Engagement Packages</option>`
-c.innerHTML+=`<option value="vlikes">Verified Likes</option>`
-c.innerHTML+=`<option value="vcomments">Verified Comments</option>`
+category.innerHTML+=`<option value="followers">Followers</option>`
+category.innerHTML+=`<option value="likes">Likes</option>`
+category.innerHTML+=`<option value="views">Views</option>`
+category.innerHTML+=`<option value="comments">Comments</option>`
+category.innerHTML+=`<option value="reels">Reel Packages</option>`
+category.innerHTML+=`<option value="fpackages">Follower Packages</option>`
+category.innerHTML+=`<option value="engagement">Engagement Packages</option>`
+category.innerHTML+=`<option value="vlikes">Verified Likes</option>`
+category.innerHTML+=`<option value="vcomments">Verified Comments</option>`
 }
 
 if(platform=="youtube"){
-c.innerHTML+=`<option value="subs">Subscribers</option>`
-c.innerHTML+=`<option value="views">Views</option>`
-c.innerHTML+=`<option value="watchtime">Watch Time</option>`
+category.innerHTML+=`<option value="subs">Subscribers</option>`
+category.innerHTML+=`<option value="views">Views</option>`
+category.innerHTML+=`<option value="watchtime">Watch Time</option>`
 }
 
 if(platform=="telegram"){
-c.innerHTML+=`<option value="members">Members</option>`
-c.innerHTML+=`<option value="views">Post Views</option>`
+category.innerHTML+=`<option value="members">Members</option>`
+category.innerHTML+=`<option value="views">Post Views</option>`
 }
 
 if(platform=="tiktok"){
-c.innerHTML+=`<option value="followers">Followers</option>`
-c.innerHTML+=`<option value="likes">Likes</option>`
+category.innerHTML+=`<option value="followers">Followers</option>`
+category.innerHTML+=`<option value="likes">Likes</option>`
+category.innerHTML+=`<option value="views">Views</option>`
 }
 
 if(platform=="facebook"){
-c.innerHTML+=`<option value="followers">Page Followers</option>`
-c.innerHTML+=`<option value="likes">Post Likes</option>`
+category.innerHTML+=`<option value="followers">Page Followers</option>`
+category.innerHTML+=`<option value="likes">Post Likes</option>`
 }
 
 if(platform=="twitter"){
-c.innerHTML+=`<option value="followers">Followers</option>`
+category.innerHTML+=`<option value="followers">Followers</option>`
+category.innerHTML+=`<option value="likes">Likes</option>`
 }
 
 if(platform=="spotify"){
-c.innerHTML+=`<option value="plays">Song Plays</option>`
+category.innerHTML+=`<option value="plays">Song Plays</option>`
 }
 
 loadServices()
@@ -161,58 +188,42 @@ loadServices()
 function loadServices(){
 
 var cat=document.getElementById("category").value
-var s=document.getElementById("service")
+var service=document.getElementById("service")
 
-s.innerHTML=""
+service.innerHTML=""
 
 if(platform=="instagram" && cat=="followers"){
-s.innerHTML+=`<option>1000 Followers</option>`
-s.innerHTML+=`<option>5000 Followers</option>`
-}
-
-if(platform=="instagram" && cat=="likes"){
-s.innerHTML+=`<option>1000 Likes</option>`
-}
-
-if(platform=="instagram" && cat=="views"){
-s.innerHTML+=`<option>10000 Views</option>`
+service.innerHTML+=`<option>1000 Followers</option>`
+service.innerHTML+=`<option>5000 Followers</option>`
 }
 
 if(platform=="instagram" && cat=="comments"){
-s.innerHTML+=`<option>Random Comments</option>`
-s.innerHTML+=`<option>Custom Comments</option>`
+service.innerHTML+=`<option>Random Comments</option>`
+service.innerHTML+=`<option>Custom Comments</option>`
 }
 
 if(platform=="instagram" && cat=="reels"){
-s.innerHTML+=`<option>Reel Boost Package</option>`
+service.innerHTML+=`<option>Reel Boost Package</option>`
 }
 
 if(platform=="instagram" && cat=="engagement"){
-s.innerHTML+=`<option>Starter Engagement Pack</option>`
+service.innerHTML+=`<option>Starter Engagement Package</option>`
 }
 
 if(platform=="youtube" && cat=="subs"){
-s.innerHTML+=`<option>1000 Subscribers</option>`
-}
-
-if(platform=="youtube" && cat=="views"){
-s.innerHTML+=`<option>10000 Views</option>`
+service.innerHTML+=`<option>1000 Subscribers</option>`
 }
 
 if(platform=="youtube" && cat=="watchtime"){
-s.innerHTML+=`<option>4000 Watch Hours</option>`
+service.innerHTML+=`<option>4000 Watch Hours</option>`
 }
 
 if(platform=="telegram" && cat=="members"){
-s.innerHTML+=`<option>10000 Members</option>`
-}
-
-if(platform=="tiktok" && cat=="followers"){
-s.innerHTML+=`<option>1000 Followers</option>`
+service.innerHTML+=`<option>10000 Members</option>`
 }
 
 if(platform=="spotify" && cat=="plays"){
-s.innerHTML+=`<option>10000 Plays</option>`
+service.innerHTML+=`<option>10000 Plays</option>`
 }
 
 showDescription()
@@ -221,19 +232,16 @@ showDescription()
 
 var descriptions={
 
-"1000 Followers":"High quality followers delivered gradually to maintain account safety.",
-"5000 Followers":"Growth package for influencers who want faster follower growth.",
-"1000 Likes":"Fast delivery likes to boost engagement on your posts.",
-"10000 Views":"High retention views that help increase reach and visibility.",
-"Random Comments":"Realistic random comments added to improve engagement.",
-"Custom Comments":"Send your own comments and we will post them manually.",
-"Reel Boost Package":"Designed to push reels into higher reach and discovery.",
-"Starter Engagement Pack":"Combination of followers, likes and views to kickstart engagement.",
-"1000 Subscribers":"Organic style subscriber growth for your channel.",
-"4000 Watch Hours":"Package designed to help channels reach monetization faster.",
-"10000 Members":"Targeted Telegram members added gradually.",
-"1000 Followers":"TikTok follower growth package.",
-"10000 Plays":"Boost your Spotify track plays for higher algorithm reach."
+"1000 Followers":"Gradual delivery followers designed to help accounts grow naturally.",
+"5000 Followers":"Larger growth package ideal for influencers and brands.",
+"Random Comments":"Automatic comments randomly generated for engagement.",
+"Custom Comments":"You provide comments and they will be posted manually.",
+"Reel Boost Package":"Boost reel reach and improve discoverability.",
+"Starter Engagement Package":"Balanced mix of followers likes and views.",
+"1000 Subscribers":"Subscriber growth for YouTube channels.",
+"4000 Watch Hours":"Package designed for monetization eligibility.",
+"10000 Members":"Telegram group member growth service.",
+"10000 Plays":"Spotify play boost service."
 
 }
 
